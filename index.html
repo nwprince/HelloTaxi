@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <!--Import Google Icon Font & Pacifico-->
+     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+     <!--Import materialize.css-->
+     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+     <!--Let browser know website is optimized for mobile-->
+     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"/>
+     <!--Theme Chrome omni-bar -->
+     <meta name="theme-color" content="#ee6e73">
+     <!--Import all Javascript necessary for Maps & Cloudboost-->
+     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+     <script type="text/javascript" src="js/materialize.min.js"></script>
+     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAui8rKxWSCVrNfaXZsIFURjH6dJZBwtCI"></script>
+     <script type="text/javascript" src="js/scripts.js"></script>
+     <script type="text/javascript" src="js/maps.js"></script>
+     <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
+     <!-- Initiate JQuery to load modal and toast messages, as well as database-->
+     <script>
+       $(document).ready(function() {
+       $('.modal-trigger').leanModal();
+       $('select').material_select();
+        });
+       CB.CloudApp.init('rudckrplfsdc', '5cdee98a-4a38-48e3-83d6-98e99b3ca063')
+    </script>
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card-panel hoverable section col s8 l12">
+        <h3>Hello Taxi</h3>
+          <div class="input-field col s3">
+            <input id="user_destination" type="text" class="validate">
+            <label for="destination">Where would you like to go?</label>
+          </div>
+          <div class="input-field col s3 m6">
+            <select id="taxi_preference" class="icons">
+            <option value="0" disable select>Choose your vehicle preference</option>
+            <option value="1" data-icon="images/sedan-1.png" class="left-circle">Sedan (1-2 Passengers)</option>
+            <option value="2" data-icon="images/cross-1.png" class="left-circle">Crossover (3-4 Passengers)</option>
+            <option value="3" data-icon="images/van.png" class="left-circle">Full-size Van (4-7 Passengers)</option>
+            </select>
+            <label>Taxi Preference</label>
+          </div>
+          <button class="btn-large waves_effect waves red lighten-2 modal-trigger" onclick="Materialize.toast('Your taxi is on its way to your current position! Please login while you wait',4000)" href="#modal1">Submit <i class="material-icons right">send</i></button>
+          <!-- Modal Structure -->
+          <div id="modal1" class="modal modal-fixed-footer">
+            <div class="modal-content">
+              <h4>Login</h4>
+              <form method="post">
+                <div class="input-field">
+                  <input id="user_name" type="text" class="validate">
+                  <label for="user_name">Username</label>
+                </div>
+                <div class="input-field">
+                  <input id="password" type="password" class="validate">
+                  <label for="password">Password</label>
+                </div>
+                <div id="emailInput" class="input-field" style="display: none;">
+                  <input id="email" type="email" class="validate">
+                  <label for="email" data-error="Please enter a valid e-mail">Email</label>
+                </div>
+                <div id="nameInput" class="input-field" style="display: none;">
+                  <input id="firstName" type="text" class="validate">
+                  <label for="firstName">First Name</label>
+                </div>
+                <div id="lastNameInput" class="input-field" style="display: none;">
+                  <input id="lastName" type="text" class="validate">
+                  <label for="lastName">Last Name</label>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <a id="submitClick" href="#!" class="waves-effect waves-red btn-flat" onclick="signUpStart()"><span id="signUpButtonText">Sign Up</span></a>
+              <a href="#!" class="modal-close waves-effect waves-red btn-flat" onclick="login()">Login</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="row valign">
+      <div class="col s1 m3"></div>
+      <div class="col s3 m6 l8">
+        <div class="map-wrapper section col s9 m6">
+          <div id="map"></div>
+          <div id="location-canvas"></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <h6 class="center-align">Made with <span style="font-family: 'Pacifico', cursive">love</span> by Daniel Herzberg, Nick Putting, and Noah Prince</h6>
+    </div>
+  <body>
+</html>

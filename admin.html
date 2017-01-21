@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <!--Import Google Icon Font & Pacifico-->
+     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+     <!--Import materialize.css-->
+     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+     <link type="text/css" rel="stylesheet" href="css/stylesheet.css" rel="stylesheet"/>
+     <!--Let browser know website is optimized for mobile-->
+     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"/>
+     <!--Theme Chrome omni-bar -->
+     <meta name="theme-color" content="#ee6e73">
+     <!--Import all Javascript necessary for Maps & Cloudboost-->
+     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+     <script type="text/javascript" src="js/materialize.min.js"></script>
+     <script type="text/javascript" src="js/scripts.js"></script>
+     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAui8rKxWSCVrNfaXZsIFURjH6dJZBwtCI"></script>
+     <script src="https://cloudboost.io/js-sdk/cloudboost.js"></script>
+     <script type="text/javascript" src="js/Chart.min.js"></script>
+     <!-- Initiate JQuery to load modal and toast messages, as well as database-->
+     <script>
+       $(document).ready(function() {
+       $('select').material_select();
+       });
+       CB.CloudApp.init('rudckrplfsdc', '107bc7c4-8742-4c2e-ba8b-fce3a8f44d55')
+    </script>
+  </head>
+  <body style="background-color:#ffffff;">
+    <div class="row">
+      <ul class="col s3 side-nav fixed" style="background-color: #2B303B;">
+        <li class="subheader" style="padding:20px;">
+          <h3 style="color:#ffffff; text-align:center; font-size:48px;">Hello Taxi</h3>
+        </li>
+        <li id="taxi" value="1" class="center hoverable white-text" onclick="activeOn(this.id)">
+          <strong style="font-size:22px;">Taxi Management</strong>
+        </li>
+        <li class="divider red lighten-2"></li>
+        <li id="record" value="2" class="center hoverable white-text" onclick="activeOn(this.id)">
+          <strong style="font-size:22px;">Records</strong>
+        </li>
+        <li class="divider red lighten-2"></li>
+        <li id="transaction" value="3" class="center hoverable white-text" onclick="activeOn(this.id)">
+          <strong style="font-size:22px;">Transactions</strong>
+        </li>
+        <li class="divider red lighten-2"></li>
+        <li id="station" value="4" class="center hoverable white-text" onclick="activeOn(this.id)">
+          <strong style="font-size:22px;">Stations</strong>
+        </li>
+        <li class="divider red lighten-2"></li>
+        <li id="active" value="0" class="center hoverable white-text" style="background-color: #ee6e73;" onclick="activeOn(this.id)">
+          <strong style="font-size:22px;">About</strong>
+        </li>
+      </ul>
+      <div class="col s3"></div>
+      <div class="col s9" style="padding:0px;">
+        <div class="valign-wrapper red lighten-2">
+          <a id="currentTitle" class="page-title valign white-text" style="margin:20px; font-weight:normal; -webkit-font-smoothing: antialiased;">About</a>
+        </div>
+      </div>
+      </nav>
+    </div>
+    <main id="aboutPage" style="display:block;">
+      <div class="section"></div>
+      <div class="row">
+        <div class="col s3"></div>
+        <div class="col s1"></div>
+        <div class="col s7">
+          <div class="card-panel">
+            <div class="center-align">
+              <h1>Hello taxi</h1>
+              <p style="font-size:20px;">This is a project for the class File Structure and Intro to Databases.
+                Our project has served <span id="numTaxiServed" class="red-text lighten-2" style="font-size:48px; font-weight:bold;"><script>countServices();</script></span> artificial taxis since the beginning of our testing phase.</p>
+              <div class="section"></div>
+              <p style="font-size:20px;">Project members include Daniel Herzberg, Nick Putting, and Noah Prince.
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <main id="taxiManagement" style="display:none;">
+      <div class="section"></div>
+      <div class="row">
+        <div class="col s3"></div>
+        <div class="col s9">
+          <div class="card-panel">
+            <div class="row">
+              <h4 class="col s2" style="padding-top:34px;">New Taxi:</h4>
+              <div class="input-field inline col s5">
+                <input id="taxi" type="number" class="validate">
+                <label for="taxiID" data-error="Please enter a number">New Taxi ID</label>
+              </div>
+              <div class="input-field col s5">
+                <select id="type" class="icons">
+                <option value="0" disable select>Choose your vehicle preference</option>
+                <option value="1" data-icon="images/sedan-1.png" class="left-circle">Sedan (1-2 Passengers)</option>
+                <option value="2" data-icon="images/cross-1.png" class="left-circle">Crossover (3-4 Passengers)</option>
+                <option value="3" data-icon="images/van.png" class="left-circle">Full-size Van (4-7 Passengers)</option>
+                </select>
+                <label>Taxi Preference</label>
+              </div>
+            </div>
+            <blockquote>
+              <div class="row">
+                <div class="input-field inline col s7">
+                  <input id="city" type="text">
+                  <label for="cityID">City of Deployment</label>
+                </div>
+                <div class="input-field inline col s5">
+                  <input id="charge" type="number">
+                  <label for="charge">Current Battery Percentage</label>
+                </div>
+              </div>
+            </blockquote>
+            <div class="row">
+              <button class="btn waves-effect red lighten-2 col s3 push-s9" onclick="newTaxi()">Add Taxi<i class="material-icons right">send</i></button>
+            </div>
+            <div class="row">
+              <h4 class="col s2" style="padding-top:34px;">Delete Taxi:</h4>
+              <div class="input-field inline col s5">
+                <input id="delTaxiByID" type="number" class="validate">
+                <label for="delTaxiByID" data-error="Please enter a number">Taxi ID to be removed from the Hello Taxi Database</label>
+              </div>
+              <div class="section" style="padding-top:22px !important; padding-bottom:11px !important;">
+                <button class="btn waves-effect red lighten-2 col s3 push-s2" onclick="delTaxi()" style="padding-top:3px;">Delete Taxi<i class="material-icons right">send</i></button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s4 push-s3">
+                <canvas id="myChart"></canvas>
+                <script>dnutChart();</script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <main id="recordManagement" style="display:none;">
+      <div class="section"></div>
+      <div class="row">
+        <div class="col s3"></div>
+        <div class="col s9">
+          <div class="card-panel">
+            <div class="row">
+              <table>
+                <thead>
+                  <tr>
+                      <th data-field="userIDForRecords">Username</th>
+                      <th data-field="taxiNum">Taxi Number</th>
+                      <th data-field="transIDForRecords">Transaction Number</th>
+                      <th data-field="dropOff">Location Dropoff</th>
+                      <th data-field="distanceTraveled">Distance</th>
+                  </tr>
+                </thead>
+                <tbody id="recordTable">
+
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <button class="btn waves-effect red lighten-2 col s3" onclick="previousRecordPage()">Previous Page<i class="material-icons left">arrow_back</i></button>
+              <div class="col s1"></div>
+              <a id="recordPageNumber">1</a>
+              <button class="btn waves-effect red lighten-2 col s2 push-s6" onclick="nextRecordPage()">Next Page<i class="material-icons right">arrow_forward</i></button>
+              <script>loadRecords();</script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <main id="transactionManagement" style="display:none;">
+      <div class="section"></div>
+      <div class="row">
+        <div class="col s3"></div>
+        <div class="col s9">
+          <div class="card-panel">
+            <div class="row">
+              <input class="search col s11" id="searchBox" placeholder="Search">
+              <button class="btn waves-effect red lighten-2 col s1" onclick="search()">
+                <i class="material-icons">search</i>
+              </button>
+            </input>
+            </div>
+            <div class="row">
+              <table>
+                <thead>
+                  <tr>
+                    <th data-field="transIDForTrans">Transaction Number</th>
+                    <th data-field="userIDForTrans">Username</th>
+                    <th data-field="transactionRate">Rate</th>
+                    <th data-field="fare">Fare</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionTable">
+
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <button class="btn waves-effect red lighten-2 col s3" onclick="previousTransactionPage()">Previous Page<i class="material-icons left">arrow_back</i></button>
+              <div class="col s1"></div>
+              <a id="transactionPageNumber">1</a>
+              <button class="btn waves-effect red lighten-2 col s2 push-s6" onclick="nextTransactionPage()">Next Page<i class="material-icons right">arrow_forward</i></button>
+              <script>loadTransactions();</script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <main id="stationManagement" style="display:none;">
+      <div class="section"></div>
+      <div class="row">
+        <div class="col s3"></div>
+        <div class="col s9">
+          <div class="card-panel">
+            <div class="row">
+              <h4 class="col s2" style="padding-top:34px;">New City:</h4>
+              <div class="input-field inline col s5">
+                <input id="cityName" type="text">
+                <label for="cityName">Name of City</label>
+              </div>
+            </div>
+            <blockquote>
+              <div class="row">
+                <div class="input-field inline col s7">
+                  <input id="cityAddress" type="text">
+                  <label for="cityAddress">City Address</label>
+                </div>
+                <div class="input-field inline col s5">
+                  <input id="chargers" type="number">
+                  <label for="chargers">Number of available chargers at station: </label>
+                </div>
+              </div>
+            </blockquote>
+            <div class="row">
+              <button class="btn waves-effect red lighten-2 col s2 push-s10" onclick="newCity()" type="reset">Submit<i class="material-icons right">send</i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+
+
+
+
+</html>
